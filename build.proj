@@ -42,19 +42,7 @@
     <Copy SourceFiles="$(MSBuildProjectDirectory)\SagePayMvc.nuspec" DestinationFolder="$(BuildDir)\temp\SagePayMvc" />
     <Copy SourceFiles="@(MainBinaries)" DestinationFolder="$(BuildDir)\temp\SagePayMvc\lib\Net40\%(RecursiveDir)" />
     
-    	<!-- Get the version number of the main  assembly to insert into the nuspec files -->
-		<GetAssemblyIdentity AssemblyFiles="$(BuildDir)\SagePayMvc\SagePayMvc.dll">
-			<Output TaskParameter="Assemblies" ItemName="AsmInfo" />
-		</GetAssemblyIdentity>
-		
-		<!-- insert the version number into the nuspec files -->
-		<XmlUpdate
-		  Namespace="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"
-			XmlFileName="$(BuildDir)\temp\SagePayMvc\SagePayMvc.nuspec"
-			XPath="/package/metadata/version"
-			Value="%(AsmInfo.Version)" />
-
-    	<Exec WorkingDirectory="$(BuildDir)" 
+		<Exec WorkingDirectory="$(BuildDir)" 
 					Command="$(BaseDir)\.nuget\nuget.exe pack $(BuildDir)\temp\SagePayMvc\SagePayMvc.nuspec" />
 		
 		
